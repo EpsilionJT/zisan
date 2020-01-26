@@ -14,5 +14,5 @@ if __name__ == "__main__":
     pr=ObjDetect_Preprocess(classnames=['Yourclass1','Yourclass2'],currentpath=current_path) # cuurentpath is needed
     #pr.clear_data() #clear all data  
     trainModel=ObjDetect_train(current_path)
-    trainModel.Run(cfg='yolov3-tiny.cfg',epochs=10)
+    trainModel.Run(cfg='yolov3-tiny.cfg',epochs=20)
     

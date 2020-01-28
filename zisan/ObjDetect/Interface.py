@@ -27,6 +27,7 @@ import os
 from os import listdir, getcwd
 from os.path import join
 import shutil
+import cv2
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -594,8 +595,11 @@ class ObjDetect_detect(object):
             save_path = str(Path(output) / Path(path).name)
 
             
+            
+            
             # Get detections
             img = torch.from_numpy(img).unsqueeze(0).to(self.device)
+            #print(img.shape)
             pred, _ = model(img)
             det = non_max_suppression(pred, conf_thres, nms_thres)[0]
 
@@ -644,4 +648,78 @@ class ObjDetect_detect(object):
                 cv2.imwrite(save_path, im0)
 
         return imgs_results
+
+    def detect_from_RGBimg(self,
+        img,
+        img_size_hw=(320,416), #hw
+        conf_thres=0.5,
+        nms_thres=0.5,
+        is_showPreview=False,
+        log_print=False):
+
+        img=img.resize((img_size_hw[1],img_size_hw[0]),Image.ANTIALIAS) #resize
+        img=np.array(img,dtype=np.uint8) #change numpy array
+        model=self.model 
+        classes = load_classes(parse_data_cfg(self.data_cfg)['names'])
+        colors = [[random.randint(0, 255) for _ in range(3)] for _ in range(len(classes))]
+        im0=img.copy() # copy raw RGB
+        #print(img.shape)
+        img = np.ascontiguousarray(img, dtype=np.float32)  # uint8 to float32
+        img /= 255.0  # 0 - 255 to 0.0 - 1.0 
+
+        img = torch.from_numpy(img).unsqueeze(0).to(self.device) # add dim and change to float
+        #print(img.shape)
+        img=img.permute(0,3,1,2) # dims change positions
+        #print(img.shape)
+
+        pred, _ = model(img)
+        det = non_max_suppression(pred, conf_thres, nms_thres)[0]
+
+        t = time.time()
+
+        if det is not None and len(det) > 0:
+                # Rescale boxes from 416 to true image size
+                det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
+
+                classes_nums=[]
+                # Print results to screen
+                print('%gx%g ' % img.shape[2:], end='')  # print image size
+                for c in det[:, -1].unique():
+                    n = (det[:, -1] == c).sum()
+                    if log_print:
+                        print('%g %ss\n' % (n, classes[int(c)]))
+                    
+                    sp='%g'%(n)
+                    
+                    classes_nums.append((int(sp),classes[int(c)]))
+                
+                
+                result_boxes=[] #(x1,x2,y1,y2)
+                # Draw bounding boxes and labels of detections
+                for *xyxy, conf, cls_conf, cls in det:
+                
+                    # Add bbox to the image
+                    label = '%s %.2f' % (classes[int(cls)], conf)
+                    c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
+                    if log_print:
+                        print("find:x[%d %d],y[%d %d]"%(c1[0],c2[0],c1[1],c2[1]))
+                    plot_one_box(xyxy, im0, label=label, color=colors[int(cls)])
+                    box=(c1[0],c2[0],c1[1],c2[1])
+                    result_boxes.append(box)
+                
+                final_result=(result_boxes,classes_nums)
+            
+
+        if log_print:
+            print('Done. (%.3fs)' % (time.time() - t))
+
+
+        if is_showPreview:  # Save image with detections
+            im0[:,:,(0,1,2)]=im0[:,:,(2,1,0)]#通道转换
+            cv2.imshow('PreviewDetect',im0)
+            cv2.waitKey(0)
+        
+        return final_result
+
+
 

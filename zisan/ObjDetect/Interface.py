@@ -54,7 +54,7 @@ class ObjDetect_Preprocess(object):
             if i != (len(self.classes)-1):
                 names.write('\n')
 
-        shapefile=open(self.datapath+'/pics.shapes','w')
+        #shapefile=open(self.datapath+'/pics.shapes','w')
 
         globalconfig = open(self.datapath+'/global_config.data','w')
         #ids=['classes=','train=','names=','backup=','eval=']
@@ -125,9 +125,10 @@ class ObjDetect_Preprocess(object):
         h = int(size.find('height').text)
         
         for obj in root.iter('object'):
-            difficult = obj.find('difficult').text
+            # difficult = obj.find('difficult').text #2020_2_6
             cls = obj.find('name').text
-            if cls not in self.classes or int(difficult) == 1:
+            #if cls not in self.classes or int(difficult) == 1:
+            if cls not in self.classes:
                 continue
             cls_id = self.classes.index(cls)
             xmlbox = obj.find('bndbox')
@@ -219,6 +220,12 @@ class ObjDetect_train(object):
             freeze_backbone=False,
             transfer=False  # Transfer learning (train only YOLO layers)
         ):
+        self.rect=False
+        if isinstance(img_size,int):
+            self.rect=False
+        else:
+            self.rect=True
+            
         init_seeds()
         weights = self.weightspath
         output=self.Outputpath
@@ -283,13 +290,13 @@ class ObjDetect_train(object):
         scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[round(self.global_epochs * x) for x in (0.8, 0.9)], gamma=0.1)
         scheduler.last_epoch = start_epoch - 1
 
-
+        
         # Dataset
         dataset = LoadImagesAndLabels(train_path,
                                     img_size,
                                     batch_size,
                                     augment=True,
-                                    rect=False)
+                                    rect=self.rect)
 
 
         # Dataloader
@@ -351,8 +358,8 @@ class ObjDetect_train(object):
                     imgs = F.interpolate(imgs, scale_factor=scale_factor, mode='bilinear', align_corners=False)
 
                 # Plot images with bounding boxes
-                if epoch == 0 and i == 0:
-                    plot_images(imgs=imgs, targets=targets, fname='train_batch%g.jpg' % i)
+                if i == (len(dataloader)-1):
+                    plot_images(imgs=imgs, targets=targets, fname='{}train_batch{}.jpg'.format(epoch,i))
 
                 # SGD burn-in
                 if epoch == 0 and i <= n_burnin:

@@ -11,9 +11,7 @@ Input the follow command:
   Also you can download the wheel file on the official site:
   http://jintupersonal.com/zisan/
 
-Then install locally
 
-    pip install zisan-1.0.9-py3-none-any.whl
 Pay attention to the lastest version to modify your pip command.
 
 

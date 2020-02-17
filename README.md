@@ -55,12 +55,12 @@ Next page:  [wiki: Class ImgSeg](http://jintupersonal.com/zisan/doc/3.html)
 ######  JintuZheng  Jan 26th 2020
 Last page:  [wiki: Demo: A Box segmentation](http://jintupersonal.com/zisan/doc/4.html)
 ## Prepare a person picture
-![From davis 2017](http://jintupersonal.com/zisan/doc/images/5.1.jpg?v=1&type=image)
+![From davis 2017](https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.1.jpg?v=1&type=image)
 
 (This picture is from dataset davis2017)
 Find the person and give him bone marks, like the following. Maybe it's very abstract. Monofilament doesn't affect our segmentation of objects。
 
-![](http://jintupersonal.com/zisan/doc/images/5.2.jpg?v=1&type=image)
+![]https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.2.jpg?v=1&type=image)
 
 ## Import Packages
 
@@ -81,7 +81,7 @@ Find the person and give him bone marks, like the following. Maybe it's very abs
 [(281,120),(267,341)] is a line element
 lines is a line list=[[(,),(,)]]
 
-![mask Preview](http://jintupersonal.com/zisan/doc/images/5.3.jpg?v=1&type=image)
+![mask Preview](https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.3.jpg?v=1&type=image)
 
 
 ## Instance segmentation
@@ -90,12 +90,12 @@ lines is a line list=[[(,),(,)]]
     model.ImgSeg_SingleObj(img,re,is_showPreview=True)
    
    Binary mask result preview:
-   ![result](http://jintupersonal.com/zisan/doc/images/5.4.jpg?v=1&type=image)
+   ![result](https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.4.jpg?v=1&type=image)
 
 
 Fade mask show preview:
 
-![fade](http://jintupersonal.com/zisan/doc/images/5.5.jpg?v=1&type=image)
+![fade](https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.5.jpg?v=1&type=image)
 
 zisan have the Yolov3 interface to train your own dataset.
 Please view the next part:

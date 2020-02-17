@@ -61,7 +61,7 @@ Last page:  [wiki: Demo: A Box segmentation](http://jintupersonal.com/zisan/doc/
 (This picture is from dataset davis2017)
 Find the person and give him bone marks, like the following. Maybe it's very abstract. Monofilament doesn't affect our segmentation of objects。
 
-![]https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.2.jpg?v=1&type=image)
+<img src="http://jintupersonal.com/zisan/doc/images/5.2.jpg">
 
 ## Import Packages
 

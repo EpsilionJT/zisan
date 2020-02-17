@@ -53,6 +53,7 @@ Next page:  [wiki: Class ImgSeg](http://jintupersonal.com/zisan/doc/3.html)
 
 # Demo: A person segmentation
 ######  JintuZheng  Jan 26th 2020
+Raw page:  [wiki: Demo: A person segmentation](http://jintupersonal.com/zisan/doc/5.html)
 Last page:  [wiki: Demo: A Box segmentation](http://jintupersonal.com/zisan/doc/4.html)
 ## Prepare a person picture
 ![From davis 2017](https://gitee.com/jintuzheng/Github_README_assets/blob/master/5.1.jpg?v=1&type=image)

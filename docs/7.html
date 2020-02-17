@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山_Demo train your dataset</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html" class="is-active">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="demo-train-your-dataset" data-source-line="1"><a class="markdownIt-Anchor"
+                href="#demo-train-your-dataset"></a>Demo: Train your DataSet</h1>
+            <h6 id="jintuzheng-jan-26th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-26th-2020"></a>JintuZheng Jan 26th 2020</h6>
+            <p data-source-line="3">Last page: <a href="http://jintupersonal.com/zisan/doc/5.html" target="_blank">wiki:
+                Package: ObjDetect</a></p>
+            <h2 id="step1-prepare-your-dataset" data-source-line="4"><a class="markdownIt-Anchor"
+                href="#step1-prepare-your-dataset"></a>Step1: Prepare your dataset</h2>
+            <p data-source-line="5">As an example, zisan will provide a red blood dataset having one class 'RBC' for
+              your training.
+              You can download the dataSet below this url:
+              link: <a href="https://pan.baidu.com/s/1hYPFJH5XnRV0THV1pW5ALA"
+                target="_blank">https://pan.baidu.com/s/1hYPFJH5XnRV0THV1pW5ALA</a>
+              key: nlbq
+              Unzip the pack, you will see folders as followed:</p>
+            <p data-source-line="11"><img data-src="7_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage" alt=""
+                src="./images/7.1.jpg"
+                data-processed="7_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="13"><code>Annotations</code> puts the xml file corresponding each picture.
+              <code>JPEGImages</code> puts the raw images.</p>
+            <p data-source-line="16">Now we Unzip the weights folder download before.
+              Blog link: <a href="http://jintupersonal.com/zisan/doc/2.html" target="_blank">wiki: Install zisan</a></p>
+            <blockquote data-source-line="19">
+              <p>Step2: Prepare the weight files for zisan
+                .......
+                Unzip runBox.zip, you will see three folders, they are <strong>"cfgs", "data", "weights"</strong>.</p>
+            </blockquote>
+            <p data-source-line="24"><img
+                data-src="7_md_files%2F%25E6%258D%2595%25E8%258E%25B7.JPG%3Fv%3D1%26type%3Dimage" alt="folders"
+                src="./images/7.2.jpg"
+                data-processed="7_md_files%2F%25E6%258D%2595%25E8%258E%25B7.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="26">Remember! Don't rechange the folders' names, epecially the <code>weights</code>
+              folder
+              Open data folder <code>runBox/data/</code></p>
+            <p data-source-line="29"><img data-src="7_md_files%2Fxd.JPG%3Fv%3D1%26type%3Dimage" alt="data tree"
+                src="./images/7.3.jpg"
+                data-processed="7_md_files%2Fxd.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="31">Four folders ( empty ) above:</p>
+            <ul data-source-line="32">
+              <li><strong>Annotaions</strong>: put xmls</li>
+              <li><strong>images</strong>: put raw images</li>
+              <li><strong>ImageSets</strong>: put set txts</li>
+              <li><strong>labels</strong>: put txt lables</li>
+            </ul>
+            <p data-source-line="37">OK, now you just need to copy two things from your red blood dataset to this
+              <code>runBox/data/</code></p>
+            <h3 id="just-two-steps" data-source-line="38"><a class="markdownIt-Anchor" href="#just-two-steps"></a>Just
+              two steps !</h3>
+            <p data-source-line="39">First, copy Annotations all xmls --&gt;<code>data/Annotations</code>
+              Second, copy JPEGimages all jpgs --&gt;<code>data/images</code></p>
+            <p data-source-line="44">Please check your upper letters whether are correct carefully.</p>
+            <h2 id="step2-start-to-write-your-train-code" data-source-line="46"><a class="markdownIt-Anchor"
+                href="#step2-start-to-write-your-train-code"></a>Step2: Start to write your train code</h2>
+            <p data-source-line="47">Now this is your code folder as show:</p>
+            <p data-source-line="49"><img data-src="7_md_files%2FrunBox.JPG%3Fv%3D1%26type%3Dimage" alt="runbox"
+                src="./images/7.4.jpg"
+                data-processed="7_md_files%2FrunBox.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="51">Create a <code>train.py</code></p>
+            <p data-source-line="53"><img data-src="7_md_files%2Ftrain.JPG%3Fv%3D1%26type%3Dimage" alt="train.py"
+                src="./images/7.5.jpg"
+                data-processed="7_md_files%2Ftrain.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="55">OK, next to write your train code:</p>
+            <pre data-source-line="57"><code class="hljs"><span class="hljs-title">from</span> zisan.<span class="hljs-type">ObjDetect</span>.<span class="hljs-type">Interface</span> <span class="hljs-keyword">import</span> ObjDetect_train, ObjDetect_Preprocess
+<span class="hljs-keyword">import</span> os</code></pre>
+            <p data-source-line="59">Then initialize and run the train model:</p>
+            <pre
+              data-source-line="61"><code class="hljs"><span class="hljs-keyword">if</span> __name__<span class="hljs-operator"> ==  </span><span class="hljs-string">"__main__"</span>:
+	current_path = os.path.dirname(__file__)
+	pr=<span class="hljs-constructor">ObjDetect_Preprocess(<span class="hljs-params">classnames</span>=['RBC'],<span class="hljs-params">currentpath</span>=<span class="hljs-params">current_path</span>)</span>  # cuurentpath is needed
+	trainModel=<span class="hljs-constructor">ObjDetect_train(<span class="hljs-params">current_path</span>)</span>
+	trainModel.<span class="hljs-constructor">Run(<span class="hljs-params">cfg</span>='<span class="hljs-params">yolov3</span>-<span class="hljs-params">tiny</span>.<span class="hljs-params">cfg</span>',<span class="hljs-params">epochs</span>=10)</span></code></pre>
+            <p data-source-line="66">The class name must be as same as the xml Annotation file's class name.
+              Then it is the coffee time........ wait</p>
+            <h2 id="step3-detect-images" data-source-line="69"><a class="markdownIt-Anchor"
+                href="#step3-detect-images"></a>Step3: Detect images</h2>
+            <p data-source-line="71"><img data-src="7_md_files%2Ffg.JPG%3Fv%3D1%26type%3Dimage" alt="detetc"
+                src="./images/7.6.jpg"
+                data-processed="7_md_files%2Ffg.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="73">create a <code>detect.py</code>
+              Now in your <code>weights folder</code>, you will see two trained weights:
+              <code>last.pth</code> and <code>best.pth</code></p>
+            <p data-source-line="77">But you don't worry about how to refer it.
+              Here you just write detect function as followed:</p>
+            <pre
+              data-source-line="80"><code class="hljs"><span class="hljs-keyword">from</span> zisan.ObjDetect.Interface <span class="hljs-keyword">import</span> ObjDetect_detect, ObjDetect_train, ObjDetect_Preprocess
+<span class="hljs-keyword">import</span> os
+
+<span class="hljs-keyword">if</span> __name__ ==  "__main__":
+	current_path = os.path.dirname(__file__)
+	detectModel=ObjDetect_detect(cfg=<span class="hljs-string">'yolov3-tiny.cfg'</span>,currentpath=current_path)
+	re=detectModel.detect_fromfiles(images=<span class="hljs-string">'D:/Users/JintuZheng/Testsamples'</span>,log_print=<span class="hljs-keyword">True</span>)  # images <span class="hljs-keyword">is</span> the <span class="hljs-type">path</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">all</span> the test images</code></pre>
+            <p data-source-line="88">The folder <code>Testsamples</code> is your detect images folder.
+              So far, you are finished a basic train task, actually you can train more epoches but your device doesn't
+              afford.
+              So, you can train first 0-10 epoches today and train the 11-20 epoches tomorrow.</p>
+            <h2 id="step4-resume-training-optional" data-source-line="92"><a class="markdownIt-Anchor"
+                href="#step4-resume-training-optional"></a>Step4: Resume training (Optional)</h2>
+            <pre
+              data-source-line="93"><code class="hljs"><span class="hljs-keyword">if</span> __name__<span class="hljs-operator"> ==  </span><span class="hljs-string">"__main__"</span>:
+	current_path = os.path.dirname(__file__)
+	pr=<span class="hljs-constructor">ObjDetect_Preprocess(<span class="hljs-params">classnames</span>=['RBC'],<span class="hljs-params">currentpath</span>=<span class="hljs-params">current_path</span>)</span>  # cuurentpath is needed
+	trainModel=<span class="hljs-constructor">ObjDetect_train(<span class="hljs-params">current_path</span>)</span>
+	trainModel.<span class="hljs-constructor">Run(<span class="hljs-params">cfg</span>='<span class="hljs-params">yolov3</span>-<span class="hljs-params">tiny</span>.<span class="hljs-params">cfg</span>',<span class="hljs-params">epochs</span>=20,<span class="hljs-params">resume</span>=True)</span> # <span class="hljs-number">11</span>-<span class="hljs-number">20</span></code></pre>
+            <p data-source-line="99">set the parameter <code>resume=True</code> and set epoches more
+              Here, all detect task all finished ! ( An output image)</p>
+            <p data-source-line="102"><img data-src="7_md_files%2FBloodImage_00090.jpg%3Fv%3D1%26type%3Dimage"
+                alt="result"
+                src="./images/7.7.jpg"
+                data-processed="7_md_files%2FBloodImage_00090.jpg%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="105">Last page: <a href="http://jintupersonal.com/zisan/doc/5.html"
+                target="_blank">wiki: Package: ObjDetect</a></p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

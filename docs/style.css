@@ -1,0 +1,25 @@
+.is-sidebar-menu {
+  padding: 2.5rem;
+  background: #4a4a4a;
+}
+.is-sidebar-menu li a {
+  color: white;
+  cursor:pointer;
+}
+
+.columns.is-fullheight {
+  /*min-height: calc(100vh - ( 3.25rem - .75rem ) );*/
+  max-height: calc(100%);
+  min-width: 60vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+.columns.is-fullheight .column {
+  overflow-y: visible;
+}
+
+.is-main-content {
+  background: #ffffff;
+  
+}

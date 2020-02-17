@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山_Install zisan</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html" class="is-active">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="install-zisan" data-source-line="1"><a class="markdownIt-Anchor" href="#install-zisan"></a>Install
+              zisan</h1>
+            <h6 id="jintuzheng-jan-25th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-25th-2020"></a>JintuZheng Jan 25th 2020</h6>
+            <p data-source-line="3">Last page: <a href="http://jintupersonal.com/zisan/doc/1.html" target="_blank">wiki:
+                Strat pytorch</a></p>
+            <h2 id="step1-install-zisan-package" data-source-line="5"><a class="markdownIt-Anchor"
+                href="#step1-install-zisan-package"></a>Step1: Install zisan package</h2>
+            <p data-source-line="6">Two easy ways to install zisan.
+              Input the follow command:</p>
+            <pre
+              data-source-line="9"><code class="hljs">pip <span class="hljs-keyword">install</span> zisan</code></pre>
+            <p data-source-line="11">Also you can download the wheel file on the official site:
+              <a href="http://jintupersonal.com/zisan/" target="_blank">http://jintupersonal.com/zisan/</a></p>
+            <p data-source-line="14">Then install locally</p>
+            <pre
+              data-source-line="16"><code class="hljs"><span class="hljs-selector-tag">pip</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">zisan-1</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.9-py3-none-any</span><span class="hljs-selector-class">.whl</span></code></pre>
+            <p data-source-line="17">Pay attention to the lastest version to modify your pip command.</p>
+            <h2 id="step2-prepare-the-weight-files-for-zisan" data-source-line="20"><a class="markdownIt-Anchor"
+                href="#step2-prepare-the-weight-files-for-zisan"></a>Step2: Prepare the weight files for zisan</h2>
+            <p data-source-line="21">Firstly you should download the weights files for zisan.
+              You can find the url button on homepage: Download weights
+              link：<a href="https://pan.baidu.com/s/1qj-Lpe4OKV0L-w9uKO8EFw"
+                target="_blank">https://pan.baidu.com/s/1qj-Lpe4OKV0L-w9uKO8EFw</a>
+              key：x9wl
+              The weight files structure is followed:</p>
+            <blockquote data-source-line="26">
+              <p>Instance_Seg_weight (Folder)</p>
+              <blockquote>
+                <p>Jintu_SEG_Interactive.pth (178 MB)</p>
+              </blockquote>
+            </blockquote>
+            <blockquote data-source-line="29">
+              <p>ObjectDetect_data_weights (Folder)</p>
+              <blockquote>
+                <p>runBox.zip (475 MB)</p>
+              </blockquote>
+            </blockquote>
+            <p data-source-line="32">Unzip runBox.zip, you will see three folders, they are <strong>"cfgs", "data",
+                "weights"</strong>.</p>
+            <blockquote data-source-line="34">
+              <p>cfgs: Here put the network configs</p>
+            </blockquote>
+            <blockquote data-source-line="36">
+              <p>data: Put your data preparing to train</p>
+            </blockquote>
+            <blockquote data-source-line="38">
+              <p>weights: Here save the raw yolo weights and your last output weights</p>
+            </blockquote>
+            <h2 id="important" data-source-line="40"><a class="markdownIt-Anchor" href="#important"></a>IMPORTANT !</h2>
+            <p data-source-line="41"><strong>DON'T RECHANGE THE FOLDER'S NAME !</strong></p>
+            <p data-source-line="43"><strong>DON'T RECHANGE THE FOLDER'S NAME !</strong></p>
+            <p data-source-line="45"><strong>DON'T RECHANGE THE FOLDER'S NAME !</strong></p>
+            <p data-source-line="47">you can't rechange the "cfgs", "weights", "data" and their child folders name,
+              because zisan. Objedetect class will use the refer all folders' name, if you rechange them, it will happen
+              errors. But you can set your current path and as parameters in function.</p>
+            <p data-source-line="49">more details you can refer the following page: <a
+                href="http://jintupersonal.com/zisan/doc/7.html" target="_blank">wiki: Train your dataset</a></p>
+            <p data-source-line="51">How to use these weights?
+              You will find your answer in the following Demo Courses.</p>
+            <p data-source-line="54">Next page: <a href="http://jintupersonal.com/zisan/doc/3.html"
+                target="_blank">wiki: Class ImgSeg</a></p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

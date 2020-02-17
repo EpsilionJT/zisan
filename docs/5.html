@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山_Demo a person segmentation</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html" class="is-active">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="demo-a-person-segmentation" data-source-line="1"><a class="markdownIt-Anchor"
+                href="#demo-a-person-segmentation"></a>Demo: A person segmentation</h1>
+            <h6 id="jintuzheng-jan-26th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-26th-2020"></a>JintuZheng Jan 26th 2020</h6>
+            <p data-source-line="3">Last page: <a href="http://jintupersonal.com/zisan/doc/4.html" target="_blank">wiki:
+                Demo: A Box segmentation</a></p>
+            <h2 id="prepare-a-person-picture" data-source-line="4"><a class="markdownIt-Anchor"
+                href="#prepare-a-person-picture"></a>Prepare a person picture</h2>
+            <p data-source-line="5"><img data-src="5_md_files%2F1.jpg%3Fv%3D1%26type%3Dimage" alt="From davis 2017"
+                src="./images/5.1.jpg"
+                data-processed="5_md_files%2F1.jpg%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="7">(This picture is from dataset davis2017)
+              Find the person and give him bone marks, like the following. Maybe it's very abstract. Monofilament
+              doesn't affect our segmentation of objects。</p>
+            <p data-source-line="10"><img data-src="5_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage" alt=""
+                src="./images/5.2.jpg"
+                data-processed="5_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage"></p>
+            <h2 id="import-packages" data-source-line="12"><a class="markdownIt-Anchor"
+                href="#import-packages"></a>Import Packages</h2>
+            <pre
+              data-source-line="14"><code class="hljs"><span class="hljs-title">from</span> zisan.<span class="hljs-type">Seg</span>.<span class="hljs-type">Interface</span> <span class="hljs-keyword">import</span> ImgSeg, markTools
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> cv2
+<span class="hljs-title">from</span> <span class="hljs-type">PIL</span> <span class="hljs-keyword">import</span> Image</code></pre>
+            <h2 id="draw-mask" data-source-line="20"><a class="markdownIt-Anchor" href="#draw-mask"></a>Draw mask</h2>
+            <pre data-source-line="22"><code class="hljs">lines=[[(<span class="hljs-number">281</span>,<span class="hljs-number">120</span>),(<span class="hljs-number">267</span>,<span class="hljs-number">341</span>)],[(<span class="hljs-number">279</span>,<span class="hljs-number">157</span>),(<span class="hljs-number">208</span>,<span class="hljs-number">171</span>)],[(<span class="hljs-number">309</span>,<span class="hljs-number">170</span>),(<span class="hljs-number">308</span>,<span class="hljs-number">250</span>)],[(<span class="hljs-number">275</span>,<span class="hljs-number">233</span>),(<span class="hljs-number">370</span>,<span class="hljs-number">341</span>)]]
+img=Image.open(current_path+<span class="hljs-string">'/temp/1.jpg'</span>).convert(<span class="hljs-string">'RGB'</span>)
+markpen=markTools(img.height,img.width)
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:
+	markpen.curveDraw(line,is_Pos=True)</code></pre>
+            <p data-source-line="28">[(281,120),(267,341)] is a line element
+              lines is a line list=[[(,),(,)]]</p>
+            <p data-source-line="31"><img
+                data-src="5_md_files%2F%25E6%258D%2595%25E8%258E%25B7.JPG%3Fv%3D1%26type%3Dimage" alt="mask Preview"
+                src="./images/5.3.jpg"
+                data-processed="5_md_files%2F%25E6%258D%2595%25E8%258E%25B7.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <h2 id="instance-segmentation" data-source-line="34"><a class="markdownIt-Anchor"
+                href="#instance-segmentation"></a>Instance segmentation</h2>
+            <pre
+              data-source-line="36"><code class="hljs">re=markpen.get<span class="hljs-constructor">Mark_result(<span class="hljs-params">is_showPreview</span>=True)</span>
+model.<span class="hljs-constructor">ImgSeg_SingleObj(<span class="hljs-params">img</span>,<span class="hljs-params">re</span>,<span class="hljs-params">is_showPreview</span>=True)</span></code></pre>
+            <p data-source-line="39">Binary mask result preview:</p>
+            <p data-source-line="41"><img data-src="5_md_files%2Fe.JPG%3Fv%3D1%26type%3Dimage" alt="result"
+                src="./images/5.4.jpg"
+                data-processed="5_md_files%2Fe.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="44">Fade mask show preview:</p>
+            <p data-source-line="46"><img data-src="5_md_files%2Ft.png%3Fv%3D1%26type%3Dimage" alt="fade"
+                src="./images/5.5.jpg"
+                data-processed="5_md_files%2Ft.png%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="48">zisan have the Yolov3 interface to train your own dataset.
+              Please view the next part:
+              <a href="http://jintupersonal.com/zisan/doc/6.html" target="_blank">wiki: Package: Object detect</a></p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山_Start for your pytorch environment</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html" class="is-active">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="get-start-for-your-pytorch-environment" data-source-line="1"><a class="markdownIt-Anchor"
+                href="#get-start-for-your-pytorch-environment"></a>Get Start for your Pytorch Environment</h1>
+            <h6 id="jintuzheng-jan-25th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-25th-2020"></a>JintuZheng Jan 25th 2020</h6>
+            <p data-source-line="3">This blog is written for totally beginners, don't worry you are still blank for CV
+              and ML. I will tell you how to build an environment base on Pytorch starting in zero.</p>
+            <blockquote data-source-line="5">
+              <p>Pytorch is an open source Python ML library from Facebook Artificial
+                Intelligence Institute (fair).</p>
+            </blockquote>
+            <h3 id="step1-install-python-36" data-source-line="8"><a class="markdownIt-Anchor"
+                href="#step1-install-python-36"></a>Step1: Install Python 3.6</h3>
+            <h5 id="download-installation-package-in-python-official-website-httpswwwpythonorgdownloads"
+              data-source-line="9"><a class="markdownIt-Anchor"
+                href="#download-installation-package-in-python-official-website-httpswwwpythonorgdownloads"></a>Download
+              Installation package in python official website <a href="https://www.python.org/downloads/"
+                target="_blank">https://www.python.org/downloads/</a></h5>
+            <p data-source-line="10">Now python has many new versions, but i suggest you to use python 3.6 as your ml
+              platform environment, because some packages in zisan need python 3.6.X, if you use 3.7 maybe happen some
+              unknown errors.</p>
+            <h3 id="step3-install-cudacudnn" data-source-line="12"><a class="markdownIt-Anchor"
+                href="#step3-install-cudacudnn"></a>Step3: Install CUDA+CUDNN</h3>
+            <p data-source-line="13">Here just give the short way on Windows.
+              Download CUDA+CUDNN on this url:
+              <em>link：<a href="https://pan.baidu.com/s/1JzwrxpUzhtnNj0urc-Uvxg"
+                  target="_blank">https://pan.baidu.com/s/1JzwrxpUzhtnNj0urc-Uvxg</a> key：5z3l</em></p>
+            <p data-source-line="17">Next, you can refer to this blog for configuration
+              <a href="https://blog.csdn.net/qq_37296487/article/details/83028394"
+                target="_blank">https://blog.csdn.net/qq_37296487/article/details/83028394</a></p>
+            <h3 id="step2-install-pytorch" data-source-line="20"><a class="markdownIt-Anchor"
+                href="#step2-install-pytorch"></a>Step2: Install Pytorch</h3>
+            <p data-source-line="21">Firstly, you can find download urls in pytorch official website.
+              All Optional configurations depend on your platforms.
+              <img data-src="Env_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage" alt="" src="./images/1.png"
+                data-processed="Env_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="25">Now copy the url command, parse it on the terminal board, run then wait for
+              download.
+              Check if you are install pytorch sucessfully
+              Run</p>
+            <pre data-source-line="29"><code class="hljs"><span class="hljs-keyword">import</span> torch
+<span class="hljs-keyword">import</span> torchvision</code></pre>
+            <p data-source-line="31">See if there are any errors, if none, OK, Congratulations on your first success</p>
+            <p data-source-line="33">Please see the next page to install zisan.</p>
+            <p data-source-line="35">Next page: <a href="http://jintupersonal.com/zisan/doc/2.html"
+                target="_blank">wiki: Install zisan</a></p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

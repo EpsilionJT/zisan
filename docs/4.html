@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山_Demo a box segmentation</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html" class="is-active">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="demo-a-box-segmentation" data-source-line="1"><a class="markdownIt-Anchor"
+                href="#demo-a-box-segmentation"></a>Demo: A Box segmentation</h1>
+            <h6 id="jintuzheng-jan-25th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-25th-2020"></a>JintuZheng Jan 25th 2020</h6>
+            <p data-source-line="3">Last page: <a href="http://jintupersonal.com/zisan/doc/3.html" target="_blank">wiki:
+                Package Seg</a></p>
+            <p data-source-line="5">All demos you can get from <a href="https://github.com/EpsilionJT/zisan" target="_blank">github: zisan
+                demos</a></p>
+            <h2 id="prepare-a-box-picture" data-source-line="7"><a class="markdownIt-Anchor"
+                href="#prepare-a-box-picture"></a>Prepare a box picture</h2>
+            <p data-source-line="8"><img data-src="4_md_files%2F2.jpg%3Fv%3D1%26type%3Dimage" alt="box"
+                src="./images/4.1.jpg"
+                data-processed="4_md_files%2F2.jpg%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="10">Our task is to get the precise contour of the box.
+              First, we suppose a rougth mask as follow</p>
+            <p data-source-line="13"><img data-src="4_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage" alt=""
+                src="./images/4.2.jpg"
+                data-processed="4_md_files%2Fimage.png%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="15">we will draw two lines in the mask.
+              Green is the object(Value 1), red is the background(Value 0), the rest area is unknow(Value -1).</p>
+            <h2 id="import-packages" data-source-line="18"><a class="markdownIt-Anchor"
+                href="#import-packages"></a>Import Packages</h2>
+            <pre data-source-line="20"><code class="hljs"><span class="hljs-title">from</span> zisan.<span class="hljs-type">Seg</span>.<span class="hljs-type">Interface</span> <span class="hljs-keyword">import</span> ImgSeg, markTools
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> cv2</code></pre>
+            <p data-source-line="24">Here we will use two classes: ImgSeg and markTools, youcan find the details in the
+              last course.</p>
+            <h2 id="draw-mask" data-source-line="26"><a class="markdownIt-Anchor" href="#draw-mask"></a>Draw mask</h2>
+            <p data-source-line="27">As above mention, we need two lines, one is pos line(Object symbol), the other is
+              the nav line ( the hint where the background is )
+              Two points decide one line.
+              So we need two points sets.</p>
+            <pre
+              data-source-line="31"><code class="hljs">Pos_points=[(<span class="hljs-number">85</span>,<span class="hljs-number">83</span>),(<span class="hljs-number">307</span>,<span class="hljs-number">257</span>)] 
+Nav_points=[(<span class="hljs-number">98</span>,<span class="hljs-number">63</span>),(<span class="hljs-number">345</span>,<span class="hljs-number">96</span>)]</code></pre>
+            <p data-source-line="33">The Point coordinate is set as the Picture above(two lines, one is green, one is
+              red)
+              Then we use the markTools to draw mask.</p>
+            <pre
+              data-source-line="36"><code class="hljs"><span class="hljs-attribute">markpen</span>=markTools(291,435) # 291 <span class="hljs-keyword">and</span> 435 is the img_height <span class="hljs-keyword">and</span> img_width
+markpen.curveDraw(Pos_points,<span class="hljs-attribute">is_Pos</span>=<span class="hljs-literal">True</span>)
+markpen.curveDraw(Nav_points,<span class="hljs-attribute">is_Pos</span>=<span class="hljs-literal">False</span>)</code></pre>
+            <p data-source-line="39">OK, after drawing mask, we can get final a tensor as mask.</p>
+            <pre
+              data-source-line="41"><code class="hljs"><span class="hljs-attr">re</span>=markpen.getMark_result(is_showPreview=<span class="hljs-literal">True</span>)</code></pre>
+            <p data-source-line="42">This is the preview mask:</p>
+            <p data-source-line="44"><img
+                data-src="4_md_files%2F%25E6%258D%2595%25E8%258E%25B7.JPG%3Fv%3D1%26type%3Dimage" alt="maskPreview"
+                src="./images/4.3.jpg"
+                data-processed="4_md_files%2F%25E6%258D%2595%25E8%258E%25B7.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <h2 id="instance-segmentation" data-source-line="46"><a class="markdownIt-Anchor"
+                href="#instance-segmentation"></a>Instance Segmentation</h2>
+            <p data-source-line="47">Then you can get segmentation of this box</p>
+            <pre
+              data-source-line="49"><code class="hljs">model.<span class="hljs-constructor">ImgSeg_SingleObj_FromFile(<span class="hljs-params">current_path</span>+'<span class="hljs-operator">/</span><span class="hljs-params">temp</span><span class="hljs-operator">/</span>2.<span class="hljs-params">jpg</span>',<span class="hljs-params">re</span>,<span class="hljs-params">is_showPreview</span>=True)</span></code></pre>
+            <p data-source-line="51"><img data-src="4_md_files%2F3.JPG%3Fv%3D1%26type%3Dimage" alt="result"
+                src="./images/4.4.jpg"
+                data-processed="4_md_files%2F3.JPG%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="53">OK, now you get a Instance segmentation of a box !
+              You want more difficult example ?
+              Please view the next page:
+              <a href="http://jintupersonal.com/zisan/doc/5.html" target="_blank">wiki: Demo A person segmentation</a>
+            </p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+  </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山Package Seg</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html" class="is-active">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="package-seg" data-source-line="1"><a class="markdownIt-Anchor" href="#package-seg"></a>Package: Seg
+            </h1>
+            <h6 id="jintuzheng-jan-25th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-25th-2020"></a>JintuZheng Jan 25th 2020</h6>
+            <p data-source-line="3">Last page: <a href="http://jintupersonal.com/zisan/doc/2.html" target="_blank">wiki:
+                Install zisan</a></p>
+            <h2 id="function-overview" data-source-line="4"><a class="markdownIt-Anchor"
+                href="#function-overview"></a>Function overview</h2>
+            <p data-source-line="5">ImgSeg class is for fast instance segmentation. You don't need to construct a
+              complex image semantic segmentation network to achieve instance segmentation task. zisan has prepared a
+              powerful weight file for you to realize fast instance segmentation. You only need to provide the ImgsSeg
+              interface with the approximate area where you need to segment the specified object.</p>
+            <h2 id="class-imgseg" data-source-line="7"><a class="markdownIt-Anchor" href="#class-imgseg"></a>Class:
+              ImgSeg</h2>
+            <h3 id="initialization" data-source-line="8"><a class="markdownIt-Anchor"
+                href="#initialization"></a>initialization</h3>
+            <p data-source-line="9">Before use the Instance segmentic segmentation, you should load the weight in your
+              initialization block.
+              ImgSeg class Initialization need the segmentation weight (178 MB), the download url which you can find in
+              the last page: <a href="http://jintupersonal.com/zisan/doc/2.html" target="_blank">wiki: Install zisan</a>
+              example to load the weight and init class: (you need replace your weight path below)</p>
+            <pre
+              data-source-line="13"><code class="hljs"><span class="hljs-attr">model</span>=ImgSeg(<span class="hljs-string">'D:/Jintu_SEG_Interactive.pth'</span>)</code></pre>
+            <p data-source-line="14">model initialization need a several seconds, maybe it is a long wait for you, so
+              you need to consider when to initlize the class in your project.</p>
+            <h3 id="interface" data-source-line="16"><a class="markdownIt-Anchor" href="#interface"></a>Interface</h3>
+            <pre
+              data-source-line="18"><code class="hljs">model.<span class="hljs-constructor">ImgSeg_MultiObjs(<span class="hljs-params">img_RGB</span>,<span class="hljs-params">object_marks</span>,<span class="hljs-params">is_showPreview</span>=False)</span>
+ model.<span class="hljs-constructor">ImgSeg_SingleObj_FromFile(<span class="hljs-params">img_path</span>,<span class="hljs-params">object_mark</span>,<span class="hljs-params">is_showPreview</span>=False)</span>
+ model.<span class="hljs-constructor">ImgSeg_SingleObj(<span class="hljs-params">img_RGB</span>,<span class="hljs-params">object_mark</span>,<span class="hljs-params">is_showPreview</span>=False)</span></code></pre>
+            <p data-source-line="22">ImgSeg has two kinds of interfaces, you can process multiple objects or single
+              object.
+              you can get the img from PTL import Image</p>
+            <pre
+              data-source-line="25"><code class="hljs"><span class="hljs-attr">Img_RGB</span> = Image.open(img_path).convert(<span class="hljs-string">'RGB'</span>)</code></pre>
+            <p data-source-line="27">You should be careful for opencv mat format and PIL are different, opencv's mat
+              format from file(imread) would get 'BGR', but PIL would get 'RGB'.
+              So i suggest that use the PIL as the load utils.</p>
+            <pre
+              data-source-line="30"><code class="hljs">Img_path = 'imgs/img.jpg' <span class="hljs-comment"># It is your img path str</span></code></pre>
+            <p data-source-line="32"><strong>object_mask</strong> is a mat which is two dims: [height,width],
+              (numpy.array)
+              if you create a new mat from numpy or torch or cv, you should use torch.squeeze or np.squeeze to cut 1
+              channel.
+              [1,height,width] --&gt;[height,width]</p>
+            <p data-source-line="36">In mat, there are three values to symbol three kinds of signals: background,
+              objects, no objects.</p>
+            <ul data-source-line="38">
+              <li>unknown: -1</li>
+              <li>background: 0</li>
+              <li>object:1</li>
+            </ul>
+            <p data-source-line="42">Because in the image we just know the rough mask, for example, background area some
+              maybe is real background, but some small parts are still object's edges. To get more imformation, i design
+              three values, value -1 is the area we can't decide whether is or not, it called unknow area. Then we must
+              know somw area 100% is the object, now we called object area which set as 1. Some area get close to the
+              object's edge, if we sure some pixels must be background, we can give the value 0 to it.
+              See the follow picture ( Red area is 0, Green area is 1, Gray area is -1):
+              <img data-src="3_md_files%2F3.png%3Fv%3D1%26type%3Dimage" alt="" src="./images/3.1.png"
+                data-processed="3_md_files%2F3.png%3Fv%3D1%26type%3Dimage"></p>
+            <p data-source-line="46">a example object_mask:
+              [-1-1-1-1-1]
+              [-1 0 0 1-1]
+              [ 0 0 1-1-1]
+              in this mat we can see three values' distribution.</p>
+            <p data-source-line="52"><strong>object_masks</strong> =[ohjmask1, objmask2,.....]
+              It is the list of each object's mask, if you need to cut multiple objects in one image, you need the
+              interface: ImgSeg_MultiObjs and use the list as parameter.</p>
+            <p data-source-line="55"><strong>is_showpreview</strong> default is False, if you want to see the result in
+              the imshow window, you can set this "True".</p>
+            <h2 id="class-marktools" data-source-line="57"><a class="markdownIt-Anchor"
+                href="#class-marktools"></a>Class: markTools</h2>
+            <h3 id="initialization-2" data-source-line="58"><a class="markdownIt-Anchor"
+                href="#initialization-2"></a>initialization</h3>
+            <p data-source-line="59">You may consider how to get a object mask. Here zisan will provide tools to help
+              you mark the object.
+              Firstly, you need to initilize a markTools class</p>
+            <pre
+              data-source-line="62"><code class="hljs">markpen=mark<span class="hljs-constructor">Tools(<span class="hljs-params">img_height</span>,<span class="hljs-params">img_width</span>)</span></code></pre>
+            <p data-source-line="63">Actually, initialization create a new mat to do mark jobs.</p>
+            <h3 id="interface-2" data-source-line="64"><a class="markdownIt-Anchor" href="#interface-2"></a>Interface
+            </h3>
+            <pre
+              data-source-line="66"><code class="hljs">markpen.curveDraw(points=[(0,0)],<span class="hljs-attribute">thickness</span>=10,is_Pos=True)
+markpen.pointDraw(points=[(0,0)],<span class="hljs-attribute">point_sizeLevel</span>=4,is_Pos=True)
+markpen.getMark_result(<span class="hljs-attribute">is_showPreview</span>=<span class="hljs-literal">False</span>)</code></pre>
+            <p data-source-line="70">curveDraw is a tool to draw lines or curves, if you want to draw a line</p>
+            <pre data-source-line="72"><code class="hljs">plist=[(<span class="hljs-number">12</span>,<span class="hljs-number">3</span>),(<span class="hljs-number">30</span>,<span class="hljs-number">40</span>)]
+markpen.curveDraw(points=plist,thickness=<span class="hljs-number">10</span>,is_Pos=True)</code></pre>
+            <p data-source-line="74">Then you will get a mask from strat point(x,y)(12,3)--&gt;end point(x,y)(30,40)
+              Parameter 'thickness' is the pen thickness.
+              Parameter 'is_Pos=True' means the value 1. If False draw line of which picxels are value 0. The mask area
+              has 0 and 1, else are -1.</p>
+            <p data-source-line="78">curveDraw tool is more likely to draw curve, you need a ordered point set,
+              p1-&gt;p2-&gt;p3-&gt;p4-&gt;p5, then you will get a fake 'curve', actually there are many lines connect.
+            </p>
+            <p data-source-line="80">Apart from curveDraw tool, you can also use the pointDraw tool, the point drawing
+              you can think as drawing a circle. So i provide a parameter called 'point_sizeLevel' to decide the radius
+              of the circle.</p>
+            <p data-source-line="82">One markTool class is a blank paper, so a maskTool class corresponding one image.
+              Get the markTool result, then you can send it to ImgSeg Interface directly.</p>
+            <pre
+              data-source-line="85"><code class="hljs">srcib=markpen.get<span class="hljs-constructor">Mark_result()</span>
+model.<span class="hljs-constructor">ImgSeg_SingleObj(<span class="hljs-params">img_RGB</span>,<span class="hljs-params">objec_mask</span>=<span class="hljs-params">srcib</span>)</span></code></pre>
+            <p data-source-line="88">Next page: <a href="http://jintupersonal.com/zisan/doc/4.html"
+                target="_blank">wiki: Demo: A Box instance Segmentation</a></p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

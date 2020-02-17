@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>芷山_Package objdetect</title>
+  <meta name="description" content="This is the description of the html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Copyright 1999-2019 by JT Software Corporation. -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mdstyle.css">
+
+</head>
+
+<body>
+  <div class="columns is-fullheight">
+    <div class="column is-2 is-sidebar-menu is-hidden-mobile">
+      <aside class="menu">
+        <p class="menu-label">
+          Configure
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/1.html">Start Pytorch</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/2.html">Install zisan</a></li>
+        </ul>
+        <p class="menu-label">
+          Instance Segmentation
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/3.html">Package: Seg</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/4.html">Demo: A Box</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/5.html">Demo: A person</a></li>
+        </ul>
+        <p class="menu-label">
+          Object Detection
+        </p>
+        <ul class="menu-list">
+          <li><a href="http://jintupersonal.com/zisan/doc/6.html" class="is-active">Package: ObjDetect</a></li>
+          <li><a href="http://jintupersonal.com/zisan/doc/7.html">Train your dataset</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-main-content">
+      <div class="ui-layout-east">
+        <article class="markdown-body" id="preview" data-open-title="Hide Preview" data-closed-title="Show Preview"
+          style="padding-bottom: 0px;">
+          <div>
+            <h1 id="package-objdetect" data-source-line="1"><a class="markdownIt-Anchor"
+                href="#package-objdetect"></a>Package: Objdetect</h1>
+            <h6 id="jintuzheng-jan-26th-2020" data-source-line="2"><a class="markdownIt-Anchor"
+                href="#jintuzheng-jan-26th-2020"></a>JintuZheng Jan 26th 2020</h6>
+            <p data-source-line="3">Last page: <a href="http://jintupersonal.com/zisan/doc/5.html" target="_blank">wiki:
+                Demo: A person segmentation</a></p>
+            <h2 id="function-overview" data-source-line="4"><a class="markdownIt-Anchor"
+                href="#function-overview"></a>Function overview</h2>
+            <p data-source-line="5">This package is mainly for object detection, i prepare three networks configs to
+              choose, they are 'Yolov3', 'Yolov3-spp', 'Yolov3-tiny'. This package must be used by some designated
+              folders which saving some available weights, so you should not try to rechange the folders' names. With
+              ObjDetect package, you can easily train your dataset based on the pretrained weights 'Yolov3'. Pretrained
+              weights are trained after COCO dataset with 80 classes. Objdetect pack can reduce your complex work to
+              build networks and process the data format like transforming xml annotations(Keras) to txt label
+              annotations(Pytorch).</p>
+            <h2 id="class-objdetect_preprocess" data-source-line="7"><a class="markdownIt-Anchor"
+                href="#class-objdetect_preprocess"></a>Class: ObjDetect_Preprocess</h2>
+            <p data-source-line="8">This class mainly for precessing the raw data images and XML annotations.</p>
+            <pre
+              data-source-line="10"><code class="hljs">def  <span class="hljs-constructor">__init__(<span class="hljs-params">self</span>,<span class="hljs-params">classnames</span>=['REC'],<span class="hljs-params">currentpath</span>='',<span class="hljs-params">datapath</span>='<span class="hljs-params">data</span>',<span class="hljs-params">xmlpath</span>='Annotations',<span class="hljs-params">setspath</span>='ImageSets',<span class="hljs-params">labelpath</span>='<span class="hljs-params">labels</span>',<span class="hljs-params">imgspath</span>='<span class="hljs-params">images</span>')</span></code></pre>
+            <p data-source-line="11">current path's meaning:</p>
+            <pre
+              data-source-line="13"><code class="hljs"><span class="hljs-title">current_path</span>/<span class="hljs-class"><span class="hljs-keyword">data</span></span></code></pre>
+            <p data-source-line="15">Example: initialize class in your code:</p>
+            <pre
+              data-source-line="18"><code class="hljs"><span class="hljs-attr">pr</span>=ObjDetect_Preprocess(classnames=[<span class="hljs-string">'Yourclass1'</span>,<span class="hljs-string">'Yourclass2'</span>],currentpath=current_path)  # cuurentpath is needed</code></pre>
+            <p data-source-line="19">It is easy to use you just give the data foloder's current path string and Your
+              classes' names. However If you want to change the name of the data folder anyway, you can just pass in the
+              parameter in the corresponding interface of the change name.</p>
+            <h2 id="class-objdetect_train" data-source-line="21"><a class="markdownIt-Anchor"
+                href="#class-objdetect_train"></a>Class: ObjDetect_train</h2>
+            <p data-source-line="22">This class mainly for training.</p>
+            <pre
+              data-source-line="24"><code class="hljs"><span class="hljs-attr">trainModel</span>=ObjDetect_train(current_path)</code></pre>
+            <p data-source-line="25">Note: The fast way to get current path is</p>
+            <pre
+              data-source-line="27"><code class="hljs">current_path = os<span class="hljs-selector-class">.path</span><span class="hljs-selector-class">.dirname</span>(__file__)</code></pre>
+            <p data-source-line="28">Initializing class may coss a several time, because it will load weights from
+              weights's contatiners.</p>
+            <pre data-source-line="30"><code class="hljs">def <span class="hljs-builtin-name">Run</span>(self,
+	<span class="hljs-attribute">epochs</span>=68,
+	<span class="hljs-attribute">batch_size</span>=8,
+	<span class="hljs-attribute">accumulate</span>=8,
+	<span class="hljs-attribute">cfg</span>=<span class="hljs-string">'yolov3-spp.cfg'</span>,
+	<span class="hljs-attribute">multi_scale</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">img_size</span>=416,
+	<span class="hljs-attribute">resume</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">transfer</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">num_workers</span>=4,
+	<span class="hljs-attribute">backend</span>=<span class="hljs-string">'ncll'</span>,
+	<span class="hljs-attribute">nosave</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">notest</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">evolve</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">var</span>=0
+	):</code></pre>
+            <p data-source-line="47">After initialization, you can run your trainModel.
+              <strong>epochs</strong>: The times you loop training.
+              <strong>batch_size</strong>: The sum of once you put into training.
+              <strong>cfg</strong>: You can choose <code>'yolov3-ting.cfg'</code>, <code>'yolov3-spp.cfg'</code> and
+              <code>'yolov3.cfg'</code>, you must sure the weights folder has the corresponding weight.
+              <strong>img_size</strong>: You can set as (height,width), also like above 416 means (416,416)
+              <strong>resume</strong>: Due to the limitation of device resources, you may not be able to train too much
+              data at a time. At this time, you can use resume to continue training for the weight of last cooling
+              <strong>num_workers</strong>: Multithreading, you must use <code>__main__</code> to use this
+              <strong>nosave</strong>: if save each epoch weight</p>
+            <h2 id="class-objdetect_detect" data-source-line="56"><a class="markdownIt-Anchor"
+                href="#class-objdetect_detect"></a>Class: ObjDetect_detect</h2>
+            <pre
+              data-source-line="58"><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">def</span>  <span class="hljs-title">__init__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>,cfg,currentpath=<span class="hljs-string">''</span>,img_size=<span class="hljs-number">416</span>)</span></span><span class="hljs-symbol">:</span></code></pre>
+            <p data-source-line="59">The curret path is as followed folder structure:</p>
+            <blockquote data-source-line="61">
+              <p>current_path/weights/yolov3-tiny.cfg</p>
+            </blockquote>
+            <h3 id="interface" data-source-line="63"><a class="markdownIt-Anchor" href="#interface"></a>Interface:</h3>
+            <p data-source-line="64">Now <code>detect_fromFiles</code> can only detect all pictures in one folder. From
+              one img interface will increase
+              in the following new version.</p>
+            <pre data-source-line="67"><code class="hljs">def  detect_fromfiles(self,
+	<span class="hljs-attribute">images</span>=<span class="hljs-string">'data/samples'</span>,  # input folder
+	<span class="hljs-attribute">output</span>=<span class="hljs-string">'output'</span>,  # <span class="hljs-keyword">if</span> you want save results, you need a output folder
+	<span class="hljs-attribute">img_size</span>=416,
+	<span class="hljs-attribute">conf_thres</span>=0.5,
+	<span class="hljs-attribute">nms_thres</span>=0.5,
+	<span class="hljs-attribute">save_txt</span>=<span class="hljs-literal">False</span>,
+	<span class="hljs-attribute">save_images</span>=<span class="hljs-literal">False</span>,  # <span class="hljs-keyword">if</span> you want <span class="hljs-keyword">to</span> save results
+	<span class="hljs-attribute">log_print</span>=<span class="hljs-literal">False</span>
+	):</code></pre>
+            <p data-source-line="78">Next page: <a href="http://jintupersonal.com/zisan/doc/7.html"
+                target="_blank">wiki: Demo: Train your dataset in Yolov3</a></p>
+          </div>
+        </article> <!-- 实时预览 -->
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.0/js/all.js'></script>
+</body>
+
+</html>

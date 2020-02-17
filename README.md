@@ -50,3 +50,54 @@ How to use these weights?
 You will find your answer in the following Demo Courses.
 
 Next page:  [wiki: Class ImgSeg](http://jintupersonal.com/zisan/doc/3.html)
+
+# Demo: A person segmentation
+######  JintuZheng  Jan 26th 2020
+Last page:  [wiki: Demo: A Box segmentation](http://jintupersonal.com/zisan/doc/4.html)
+## Prepare a person picture
+![From davis 2017](5_md_files/1.jpg?v=1&type=image)
+
+(This picture is from dataset davis2017)
+Find the person and give him bone marks, like the following. Maybe it's very abstract. Monofilament doesn't affect our segmentation of objects。
+
+![](5_md_files/image.png?v=1&type=image)
+
+## Import Packages
+
+    from zisan.Seg.Interface import ImgSeg, markTools
+    import os
+    import numpy as np
+    import cv2
+    from PIL import Image
+
+## Draw mask
+
+    lines=[[(281,120),(267,341)],[(279,157),(208,171)],[(309,170),(308,250)],[(275,233),(370,341)]]
+    img=Image.open(current_path+'/temp/1.jpg').convert('RGB')
+    markpen=markTools(img.height,img.width)
+    for line in lines:
+    	markpen.curveDraw(line,is_Pos=True)
+
+[(281,120),(267,341)] is a line element
+lines is a line list=[[(,),(,)]]
+
+![mask Preview](5_md_files/%E6%8D%95%E8%8E%B7.JPG?v=1&type=image)
+
+
+## Instance segmentation
+
+    re=markpen.getMark_result(is_showPreview=True)
+    model.ImgSeg_SingleObj(img,re,is_showPreview=True)
+   
+   Binary mask result preview:
+   ![result](5_md_files/e.JPG?v=1&type=image)
+
+
+Fade mask show preview:
+
+![fade](5_md_files/t.png?v=1&type=image)
+
+zisan have the Yolov3 interface to train your own dataset.
+Please view the next part:
+[wiki: Package: Object detect](http://jintupersonal.com/zisan/doc/6.html)
+

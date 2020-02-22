@@ -16,11 +16,11 @@ if __name__ == "__main__":
     img=Image.open('D:/1.jpg').convert('RGB')
     re=detectModel.detect_from_RGBimg(img,is_showPreview=True)
 
-    for img in re: # get one img classesNums
-        print(img[1])
+    for info in re: # get one img classesNums
+        print(info[1])
     
-    for img in re: # get one img result_boxes
-        print(img[0])
+    for info in re: # get one img result_boxes
+        print(info[0])
 
     #log_print true means you can read the results in the terminal
     

@@ -2,7 +2,7 @@
 ### @author：郑晋图 JintuZheng
 ### Email: jintuzheng@outlook.com
 ### Remarks: Please respect my labor achievements, and contact me to modify the source code
-### Date:2020-01-23
+### Date:2020-03-11
 ################################################################
 
 import argparse
@@ -658,13 +658,13 @@ class ObjDetect_detect(object):
 
     def detect_from_RGBimg(self,
         img,
-        img_size_hw=(320,416), #hw
+        img_size_hw=(416,416), #hw
         conf_thres=0.5,
         nms_thres=0.5,
         is_showPreview=False,
         log_print=False):
 
-        img=img.resize((img_size_hw[1],img_size_hw[0]),Image.ANTIALIAS) #resize
+        #img=img.resize((img_size_hw[1],img_size_hw[0]),Image.ANTIALIAS) #resize
         img=np.array(img,dtype=np.uint8) #change numpy array
         model=self.model 
         classes = load_classes(parse_data_cfg(self.data_cfg)['names'])
@@ -682,39 +682,33 @@ class ObjDetect_detect(object):
         pred, _ = model(img)
         det = non_max_suppression(pred, conf_thres, nms_thres)[0]
 
-        t = time.time()
-
+        #t = time.time()
+        result_boxes=[]
         if det is not None and len(det) > 0:
                 # Rescale boxes from 416 to true image size
                 det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
 
-                classes_nums=[]
+
                 # Print results to screen
-                print('%gx%g ' % img.shape[2:], end='')  # print image size
+                #print('%gx%g ' % img.shape[2:], end='')  # print image size
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()
                     if log_print:
-                        print('%g %ss\n' % (n, classes[int(c)]))
-                    
+                        print('%g %s\n' % (n, classes[int(c)]))
                     sp='%g'%(n)
-                    
-                    classes_nums.append((int(sp),classes[int(c)]))
-                
-                
-                result_boxes=[] #(x1,x2,y1,y2)
+             
                 # Draw bounding boxes and labels of detections
                 for *xyxy, conf, cls_conf, cls in det:
                 
                     # Add bbox to the image
-                    label = '%s %.2f' % (classes[int(cls)], conf)
+                    label = '%s' % (classes[int(cls)])
                     c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
                     if log_print:
                         print("find:x[%d %d],y[%d %d]"%(c1[0],c2[0],c1[1],c2[1]))
                     plot_one_box(xyxy, im0, label=label, color=colors[int(cls)])
-                    box=(c1[0],c2[0],c1[1],c2[1])
+                    box={'class':classes[int(cls)],'x0':c1[0],'x1':c2[0],'y0':c1[1],'y1':c2[1]}
                     result_boxes.append(box)
-                
-                final_result=(result_boxes,classes_nums)
+
             
 
         if log_print:
@@ -726,7 +720,7 @@ class ObjDetect_detect(object):
             cv2.imshow('PreviewDetect',im0)
             cv2.waitKey(0)
         
-        return final_result
+        return result_boxes
 
 
 

@@ -23,7 +23,7 @@ from scipy.cluster.vq import kmeans, vq
 from skimage import io
 from matplotlib import pyplot as plt
 import cv2
-from utils import pngToJpg
+from zisan.FileTools.tools import pngToJpg
 
 np.seterr(divide='ignore',invalid='ignore')
 

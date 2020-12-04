@@ -2,6 +2,7 @@ from zisan.Seg.Interface import ImgSeg, markTools
 import os
 import numpy as np
 import cv2
+import time
 
 
 current_path = os.path.dirname(__file__)
@@ -15,9 +16,12 @@ markpen=markTools(291,435)
 markpen.curveDraw(Pos_points,is_Pos=True)
 #markpen.pointDraw(Pos_points,7,True)
 markpen.curveDraw(Nav_points,is_Pos=False)
-re=markpen.getMark_result(is_showPreview=True) # Preview the line marks
+re=markpen.getMark_result(is_showPreview=False) # Preview the line marks
 
-model.ImgSeg_SingleObj_FromFile(current_path+'/temp/2.jpg',re,is_showPreview=True)
+st=time.time()
+model.ImgSeg_SingleObj_FromFile(current_path+'/temp/2.jpg',re,is_showPreview=False)
+ed=time.time()
+print(ed-st)
 
 
 

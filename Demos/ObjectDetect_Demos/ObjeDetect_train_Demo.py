@@ -9,8 +9,14 @@ Details you can read the Doc: http://jintupersonal.com/zisan/Doc/
 
 
 if __name__ == "__main__":  
-    pr=ObjDetect_Preprocess(classnames=['Yourclass1','Yourclass2'],currentpath='D:/xxx/runBox') # cuurentpath is needed
-    #pr.clear_data() #clear all data  
+    #current_path = os.path.dirname(__file__)
+    current_path = os.getcwd()
+
+    
+    pr=ObjDetect_Preprocess(classnames=['RBC'],currentpath=current_path) # current path is needed
+    #pr.clear_data() #clear all data 
+    
     trainModel=ObjDetect_train(current_path)
-    trainModel.Run(cfg='yolov3-tiny.cfg',epochs=20)
+    trainModel.Run(cfg='yolov3-tiny.cfg',epochs=10)
+    
     

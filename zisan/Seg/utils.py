@@ -172,17 +172,13 @@ def overlay_bin(image,mask, rgb=[0,0,0]):
 def overlay_fade(image, mask):
     from scipy.ndimage.morphology import binary_erosion, binary_dilation
     im_overlay = image.copy()
-
     # Overlay color on  binary mask
     binary_mask = mask == 1
     not_mask = mask != 1
-
     # Compose image
     im_overlay[not_mask] = 0.4 * im_overlay[not_mask]
-
     countours = binary_dilation(binary_mask) ^ binary_mask
     im_overlay[countours,0] = 0
     im_overlay[countours,1] = 255
     im_overlay[countours,2] = 255
-
     return im_overlay.astype(image.dtype)

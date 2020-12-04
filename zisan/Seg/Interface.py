@@ -19,32 +19,6 @@ class ImgSeg(object):
     def __init__(self,weight_path):
         self.Inetmodel = model(weight_path) #load the model init need more time
 
-    def ImgSeg_MultiObjs(self,img_RGB,object_marks,is_showPreview=False):
-        results=[]
-        for mark in object_marks:
-            results.append(self.ImgSeg_SingleObj(img_RGB,mark))
-        tersum=results[0]
-        for item in results:
-            tersum+=item   
-        if is_showPreview:
-            cv2.imshow('Preview_multi',tersum)
-            cv2.waitKey(0)
-        return tersum
-
-    def ImgSeg_MultiObjs(self,img_path,object_marks,is_showPreview=False):
-        results=[]
-        img_RGB=Image.open(img_path).convert('RGB')
-        for mark in object_marks:
-            results.append(self.ImgSeg_SingleObj(img_RGB,mark))
-        tersum=results[0]
-        for item in results:
-            tersum+=item
-
-        if is_showPreview:
-            cv2.imshow('Preview_multi',tersum)
-            cv2.waitKey(0)
-        return tersum
-
     def Preview(self,img,mask):
         img[:,:,(0,1,2)]=img[:,:,(2,1,0)]#通道转换
         cv2.imshow("Preview_Jintu",img)
@@ -61,7 +35,7 @@ class ImgSeg(object):
         result=overlay_bin(frames[0],current_mask)
         if is_showPreview :
             self.Preview(overlay_fade(frames[0],current_mask),result)
-        return result
+        return result,overlay_fade(frames[0],current_mask)
 
     def ImgSeg_SingleObj_FromFile(self,img_path,object_mark,is_showPreview=False):
         frame_list=[]
@@ -120,6 +94,26 @@ class markTools(object):
         self.canvas[self.canvas==0]=-1 #background
         self.canvas[self.canvas==100]=0 # Na
         return self.canvas
+    def getMark_result_from_gray(img_gray2):
+        img_gray=img_gray2.copy()
+        img_gray[img_gray==255]=1 #Pos
+        img_gray[img_gray==0]=-1 #background
+        img_gray[img_gray==100]=0 # Na
+        return img_gray
 
-
+    def mergeMask_fade_from_gray(image,mask_gray):
+        from scipy.ndimage.morphology import binary_erosion, binary_dilation
+        mask_gray[np.where(mask_gray==255)]=1
+        mask=mask_gray
+        im_overlay = image.copy()
+        # Overlay color on  binary mask
+        binary_mask = mask == 1
+        not_mask = mask != 1
+        # Compose image
+        im_overlay[not_mask] = 0.4 * im_overlay[not_mask]
+        countours = binary_dilation(binary_mask) ^ binary_mask
+        im_overlay[countours,0] = 0
+        im_overlay[countours,1] = 255
+        im_overlay[countours,2] = 255
+        return im_overlay.astype(image.dtype)
 

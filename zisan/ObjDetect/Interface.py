@@ -605,7 +605,7 @@ class ObjDetect_detect(object):
         pred, _ = model(img)
         det = non_max_suppression(pred, conf_thres, nms_thres)[0]
 
-        #t = time.time()
+        t = time.time()
         result_boxes=[]
         if det is not None and len(det) > 0:
                 # Rescale boxes from 416 to true image size
@@ -618,11 +618,13 @@ class ObjDetect_detect(object):
                     n = (det[:, -1] == c).sum()
                     if log_print:
                         print('%g %s\n' % (n, classes[int(c)]))
+                    
                     sp='%g'%(n)
+                    
              
                 # Draw bounding boxes and labels of detections
                 for *xyxy, conf, cls_conf, cls in det:
-                
+                    #print(cls_conf)
                     # Add bbox to the image
                     label = '%s' % (classes[int(cls)])
                     c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
@@ -642,8 +644,9 @@ class ObjDetect_detect(object):
             im0[:,:,(0,1,2)]=im0[:,:,(2,1,0)]#通道转换
             cv2.imshow('PreviewDetect',im0)
             cv2.waitKey(0)
-        
-        return result_boxes
+
+        #im0[:,:,(0,1,2)]=im0[:,:,(2,1,0)]#通道转换
+        return result_boxes,im0
 
 
 

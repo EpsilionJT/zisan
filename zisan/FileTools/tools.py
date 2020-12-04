@@ -32,7 +32,7 @@ def getFiles(dir):
 
 def add_roi(backimg,logoimg,logox0,logoy0):
     backimg=backimg.copy()
-    logoRs,logoCs,logoChels=logoimg.shape#算出logo的空间参数
+    logoRs,logoCs=logoimg.shape[0],logoimg.shape[1]#算出logo的空间参数
     for y in range(logoy0,logoy0+logoRs):
             for x in range(logox0,logox0+logoCs):
                 backimg[y,x,:]=logoimg[y-logoy0,x-logox0,:]
@@ -47,18 +47,13 @@ def scaleTransfrom(tar_img,W,H,x0,x1,y0,y1):  # 对坐标进行放缩
     y1 *= scale['y_h']
     return int(x0),int(x1),int(y0),int(y1)
 
-def get_random_files(dir,sum,limit):
-    rlist=[]
-    for ss in range(sum):
-        i=random.randint(0,limit)
-        rlist.append(i)
-    wholes=[]
-    fslist=[]
-    for root,dirs,files in os.walk(dir):
-                for file in files:
-                    wholes.append(dir+str(file))
-    for idx in range(len(rlist)):
-        fslist.append(wholes[rlist[idx]])
+def get_random_files(dir,proportion):
+    fl = getFiles(dir)
+    rlist=[ i for i in range(0,len(fl))]
+    random.shuffle(rlist)
+    fslist = []
+    for idx in range(0,int(proportion*len(fl))):
+        fslist.append(fl[rlist[idx]])
     return fslist
 
 def newMatUC3(width,height,colorR,colorG,colorB):#创建空白图像

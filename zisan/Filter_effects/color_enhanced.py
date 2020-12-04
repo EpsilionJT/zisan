@@ -203,6 +203,8 @@ def sample_pixels(img, options):
 
     idx = np.arange(num_pixels)
     np.random.shuffle(idx)
+    #np.save("D:/we",idx)
+    #idx=np.load("D:/we.npy")
 
     return pixels[idx[:num_samples]]
 
